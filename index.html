@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Tool Finder - Find the Perfect AI Tool</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; background: linear-gradient(to bottom right, #f8fafc, #ede9fe, #e0e7ff); min-height: 100vh; }
+        .container { max-width: 1280px; margin: 0 auto; padding: 20px; }
+        .hero { text-align: center; padding: 60px 20px 40px; }
+        .badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: rgba(255,255,255,0.8); border: 1px solid #ddd6fe; border-radius: 20px; font-size: 14px; color: #7c3aed; margin-bottom: 20px; }
+        .badge svg { width: 16px; height: 16px; }
+        h1 { font-size: 48px; font-weight: 700; margin-bottom: 16px; color: #0f172a; }
+        .gradient-text { background: linear-gradient(to right, #7c3aed, #4f46e5); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .subtitle { font-size: 20px; color: #64748b; max-width: 600px; margin: 0 auto 40px; }
+        .search-box { position: relative; max-width: 700px; margin: 0 auto 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.15); border-radius: 16px; }
+        .search-input { width: 100%; padding: 20px 60px 20px 50px; font-size: 16px; border: 2px solid transparent; border-radius: 16px; background: white; outline: none; }
+        .search-input:focus { border-color: #7c3aed; }
+        .search-icon { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: #94a3b8; }
+        .search-btn { position: absolute; right: 8px; top: 8px; padding: 12px 24px; background: linear-gradient(to right, #7c3aed, #4f46e5); color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: 500; display: flex; align-items: center; gap: 8px; }
+        .search-btn:hover { opacity: 0.9; }
+        .search-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .examples { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 40px; }
+        .example-btn { padding: 8px 16px; background: rgba(255,255,255,0.8); border: 1px solid #e2e8f0; border-radius: 20px; font-size: 14px; color: #475569; cursor: pointer; transition: all 0.3s; }
+        .example-btn:hover { background: white; border-color: #7c3aed; color: #7c3aed; }
+        .stats { display: flex; justify-content: center; gap: 60px; padding: 20px; background: rgba(255,255,255,0.6); border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0; margin-bottom: 30px; }
+        .stat { text-align: center; }
+        .stat-value { font-size: 28px; font-weight: 700; color: #0f172a; }
+        .stat-label { font-size: 14px; color: #64748b; }
+        .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 30px; justify-content: center; }
+        .filter-btn { padding: 8px 16px; background: white; border: 1px solid #e2e8f0; border-radius: 20px; cursor: pointer; font-size: 14px; color: #475569; transition: all 0.3s; }
+        .filter-btn.active { background: linear-gradient(to right, #7c3aed, #4f46e5); color: white; border-color: transparent; }
+        .filter-btn:hover:not(.active) { background: #f8fafc; }
+        .results-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
+        .card { background: white; border-radius: 16px; padding: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border: 1px solid #f1f5f9; transition: all 0.3s; }
+        .card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.12); transform: translateY(-2px); }
+        .card-header { display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px; }
+        .card-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 20px; }
+        .card-title { font-size: 18px; font-weight: 600; color: #0f172a; margin-bottom: 4px; }
+        .card-category { display: inline-block; padding: 4px 12px; background: linear-gradient(to right, #7c3aed, #4f46e5); color: white; border-radius: 12px; font-size: 12px; }
+        .card-desc { color: #64748b; font-size: 14px; line-height: 1.6; margin-bottom: 16px; }
+        .card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+        .tag { padding: 4px 10px; background: #f1f5f9; color: #475569; border-radius: 12px; font-size: 12px; }
+        .card-info { display: flex; gap: 16px; font-size: 13px; margin-bottom: 16px; color: #10b981; }
+        .rating { display: flex; gap: 2px; margin-bottom: 16px; }
+        .star { color: #fbbf24; }
+        .star.empty { color: #e5e7eb; }
+        .card-btn { width: 100%; padding: 12px; background: linear-gradient(to right, #7c3aed, #4f46e5); color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: 500; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .card-btn:hover { opacity: 0.9; }
+        .match-score { padding: 4px 12px; background: #f3f4f6; border-radius: 12px; font-size: 12px; color: #7c3aed; font-weight: 600; }
+        .empty-state { text-align: center; padding: 80px 20px; }
+        .empty-icon { width: 80px; height: 80px; margin: 0 auto 20px; background: #f1f5f9; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #94a3b8; }
+        .spinner { border: 2px solid #f3f4f6; border-top: 2px solid white; border-radius: 50%; width: 16px; height: 16px; animation: spin 0.8s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @media (max-width: 640px) {
+            h1 { font-size: 32px; }
+            .stats { flex-direction: column; gap: 20px; }
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <div class="badge">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                AI-Powered Tool Discovery
+            </div>
+            <h1>Find the Perfect <span class="gradient-text">AI Tool</span></h1>
+            <p class="subtitle">Describe what you want to accomplish and we'll suggest the best AI tools for your needs</p>
+            
+            <div class="search-box">
+                <svg class="search-icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                <input type="text" class="search-input" id="searchInput" placeholder="e.g., 'build a website', 'edit video', 'write marketing copy'">
+                <button class="search-btn" id="searchBtn" onclick="performSearch()">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                    Find AI Tools
+                </button>
+            </div>
+
+            <div class="examples" id="examples"></div>
+        </div>
+
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-value" id="totalTools">48</div>
+                <div class="stat-label">AI Tools</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">20</div>
+                <div class="stat-label">Categories</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">88</div>
+                <div class="stat-label">Keywords</div>
+            </div>
+        </div>
+
+        <div class="filters" id="categoryFilters"></div>
+        
+        <div id="resultsHeader"></div>
+        <div class="grid" id="toolsGrid"></div>
+    </div>
+
+    <script>
+        const categories = {
+            all: 'All Tools', coding: 'Coding', writing: 'Writing', image_generation: 'Images',
+            video_generation: 'Video', audio_voice: 'Audio', data_analysis: 'Data',
+            marketing: 'Marketing', customer_support: 'Support', education: 'Education',
+            presentation: 'Slides', research: 'Research', '3d_animation': '3D',
+            website_building: 'Websites', translation: 'Translation', hr_recruitment: 'HR',
+            legal: 'Legal', healthcare: 'Healthcare', finance: 'Finance',
+            project_management: 'Projects', general_assistant: 'Assistant'
+        };
+
+        const gradients = {
+            coding: 'linear-gradient(135deg, #10b981, #14b8a6)',
+            writing: 'linear-gradient(135deg, #3b82f6, #06b6d4)',
+            image_generation: 'linear-gradient(135deg, #ec4899, #f43f5e)',
+            video_generation: 'linear-gradient(135deg, #a855f7, #8b5cf6)',
+            audio_voice: 'linear-gradient(135deg, #f59e0b, #f97316)',
+            data_analysis: 'linear-gradient(135deg, #0ea5e9, #2563eb)',
+            marketing: 'linear-gradient(135deg, #d946ef, #ec4899)',
+            customer_support: 'linear-gradient(135deg, #22c55e, #10b981)',
+            education: 'linear-gradient(135deg, #6366f1, #a855f7)',
+            presentation: 'linear-gradient(135deg, #f97316, #ef4444)',
+            research: 'linear-gradient(135deg, #06b6d4, #14b8a6)',
+            '3d_animation': 'linear-gradient(135deg, #8b5cf6, #a855f7)',
+            website_building: 'linear-gradient(135deg, #f43f5e, #ec4899)',
+            translation: 'linear-gradient(135deg, #14b8a6, #06b6d4)',
+            hr_recruitment: 'linear-gradient(135deg, #84cc16, #22c55e)',
+            legal: 'linear-gradient(135deg, #64748b, #6b7280)',
+            healthcare: 'linear-gradient(135deg, #ef4444, #f43f5e)',
+            finance: 'linear-gradient(135deg, #10b981, #22c55e)',
+            project_management: 'linear-gradient(135deg, #2563eb, #6366f1)',
+            general_assistant: 'linear-gradient(135deg, #8b5cf6, #6366f1)'
+        };
+
+        const examples = [
+            'Build a website for my business',
+            'Write marketing copy for social media',
+            'Create a promotional video',
+            'Generate images for my blog',
+            'Help me learn programming',
+            'Transcribe my meeting recordings'
+        ];
+
+        const tools = [{"name":"GitHub Copilot","category":"coding","description":"AI pair programmer that suggests code completions and entire functions","keywords":["code","programming","developer","autocomplete","IDE"],"free_tier":true,"pricing_starts":10,"website_url":"https://github.com/features/copilot","best_for":["developers","software engineers"],"rating":4.5},{"name":"ChatGPT","category":"general_assistant","description":"Versatile AI assistant for writing, coding, analysis, and conversation","keywords":["chat","conversation","assistant","writing","coding"],"free_tier":true,"pricing_starts":20,"website_url":"https://chat.openai.com","best_for":["general assistance","writing","coding help"],"rating":4.7},{"name":"Claude","category":"general_assistant","description":"AI assistant excelling at document analysis and reasoning","keywords":["chat","analysis","documents","reasoning","writing"],"free_tier":true,"pricing_starts":20,"website_url":"https://claude.ai","best_for":["document analysis","research"],"rating":4.6},{"name":"Jasper","category":"writing","description":"AI writing assistant for marketing copy and blog posts","keywords":["copywriting","marketing","blog","content","SEO"],"free_tier":false,"pricing_starts":49,"website_url":"https://www.jasper.ai","best_for":["marketers","copywriters"],"rating":4.4},{"name":"Grammarly","category":"writing","description":"AI writing assistant for grammar and clarity improvements","keywords":["grammar","spelling","writing","editing","proofreading"],"free_tier":true,"pricing_starts":12,"website_url":"https://www.grammarly.com","best_for":["writers","students","professionals"],"rating":4.6},{"name":"Midjourney","category":"image_generation","description":"AI image generator known for artistic, high-quality visuals","keywords":["image","art","illustration","visual","design"],"free_tier":false,"pricing_starts":10,"website_url":"https://www.midjourney.com","best_for":["artists","designers"],"rating":4.8},{"name":"DALL-E 3","category":"image_generation","description":"OpenAI's image generator with excellent prompt understanding","keywords":["image","picture","photo","art","illustration"],"free_tier":true,"pricing_starts":20,"website_url":"https://openai.com/dall-e-3","best_for":["content creators","marketers"],"rating":4.5},{"name":"Canva AI","category":"image_generation","description":"AI-powered design tools for easy graphic creation","keywords":["design","graphics","social media","templates"],"free_tier":true,"pricing_starts":13,"website_url":"https://www.canva.com","best_for":["non-designers","small businesses"],"rating":4.6},{"name":"Synthesia","category":"video_generation","description":"AI video generator with realistic avatars from text","keywords":["video","avatar","presentation","training"],"free_tier":false,"pricing_starts":22,"website_url":"https://www.synthesia.io","best_for":["corporate training","marketing"],"rating":4.4},{"name":"Runway","category":"video_generation","description":"AI-powered video editing and generation platform","keywords":["video editing","effects","green screen","motion"],"free_tier":true,"pricing_starts":12,"website_url":"https://runwayml.com","best_for":["video editors","filmmakers"],"rating":4.5},{"name":"ElevenLabs","category":"audio_voice","description":"AI voice generator with ultra-realistic text-to-speech","keywords":["voice","speech","audio","narration","voiceover"],"free_tier":true,"pricing_starts":5,"website_url":"https://elevenlabs.io","best_for":["content creators","podcasters"],"rating":4.7},{"name":"Otter.ai","category":"research","description":"AI meeting assistant that transcribes and summarizes","keywords":["transcription","meeting notes","recording","summary"],"free_tier":true,"pricing_starts":17,"website_url":"https://otter.ai","best_for":["professionals","students"],"rating":4.5},{"name":"Perplexity","category":"research","description":"AI-powered search engine with cited answers","keywords":["search","research","questions","answers","citations"],"free_tier":true,"pricing_starts":20,"website_url":"https://perplexity.ai","best_for":["researchers","students"],"rating":4.6},{"name":"Cursor","category":"coding","description":"AI-first code editor with advanced coding capabilities","keywords":["code editor","IDE","programming","development"],"free_tier":true,"pricing_starts":20,"website_url":"https://cursor.sh","best_for":["developers","software engineers"],"rating":4.6},{"name":"Beautiful.ai","category":"presentation","description":"AI presentation maker with automatic slide design","keywords":["presentation","slides","PowerPoint","deck"],"free_tier":false,"pricing_starts":12,"website_url":"https://www.beautiful.ai","best_for":["business professionals","sales teams"],"rating":4.4},{"name":"Gamma","category":"presentation","description":"AI-powered presentation tool from text prompts","keywords":["presentation","slides","documents","pitch"],"free_tier":true,"pricing_starts":10,"website_url":"https://gamma.app","best_for":["professionals","educators"],"rating":4.5},{"name":"Hootsuite","category":"marketing","description":"Social media management with AI content suggestions","keywords":["social media","scheduling","analytics","marketing"],"free_tier":false,"pricing_starts":99,"website_url":"https://www.hootsuite.com","best_for":["social media managers","agencies"],"rating":4.2},{"name":"Surfer SEO","category":"marketing","description":"AI-powered SEO tool for content optimization","keywords":["SEO","search engine","keywords","optimization"],"free_tier":false,"pricing_starts":89,"website_url":"https://surferseo.com","best_for":["SEO specialists","content marketers"],"rating":4.5},{"name":"Zendesk AI","category":"customer_support","description":"AI-powered customer service platform","keywords":["customer support","help desk","tickets","chat"],"free_tier":false,"pricing_starts":55,"website_url":"https://www.zendesk.com","best_for":["support teams","enterprises"],"rating":4.3},{"name":"Intercom","category":"customer_support","description":"Customer messaging platform with AI chatbot","keywords":["chatbot","customer chat","support","messaging"],"free_tier":false,"pricing_starts":39,"website_url":"https://www.intercom.com","best_for":["SaaS companies","e-commerce"],"rating":4.4},{"name":"Quizlet AI","category":"education","description":"AI-enhanced study platform with flashcards","keywords":["flashcards","studying","memorization","quizzes"],"free_tier":true,"pricing_starts":8,"website_url":"https://quizlet.com","best_for":["students","learners"],"rating":4.4},{"name":"DeepL","category":"translation","description":"AI translator known for high-quality translations","keywords":["translation","language","translate","localization"],"free_tier":true,"pricing_starts":9,"website_url":"https://www.deepl.com","best_for":["translators","businesses"],"rating":4.7},{"name":"Power BI","category":"data_analysis","description":"Microsoft's AI-powered business intelligence tool","keywords":["data visualization","analytics","dashboards","reports"],"free_tier":true,"pricing_starts":10,"website_url":"https://powerbi.microsoft.com","best_for":["data analysts","business users"],"rating":4.5},{"name":"Tableau","category":"data_analysis","description":"Visual analytics platform with AI exploration","keywords":["data visualization","analytics","dashboards"],"free_tier":false,"pricing_starts":70,"website_url":"https://www.tableau.com","best_for":["data analysts","enterprises"],"rating":4.6},{"name":"QuickBooks","category":"finance","description":"Popular accounting software with AI bookkeeping","keywords":["accounting","bookkeeping","taxes","invoices"],"free_tier":false,"pricing_starts":30,"website_url":"https://quickbooks.intuit.com","best_for":["small businesses","self-employed"],"rating":4.3},{"name":"Asana","category":"project_management","description":"Work management with AI task automation","keywords":["project management","tasks","team collaboration"],"free_tier":true,"pricing_starts":11,"website_url":"https://asana.com","best_for":["teams","project managers"],"rating":4.4},{"name":"Monday.com","category":"project_management","description":"Flexible work OS with AI automations","keywords":["work management","project tracking","workflows"],"free_tier":true,"pricing_starts":9,"website_url":"https://monday.com","best_for":["teams","managers"],"rating":4.5},{"name":"ClickUp","category":"project_management","description":"All-in-one productivity platform with AI","keywords":["productivity","project management","tasks","docs"],"free_tier":true,"pricing_starts":7,"website_url":"https://clickup.com","best_for":["teams","individuals","agencies"],"rating":4.4},{"name":"Framer","category":"website_building","description":"No-code website builder with AI design","keywords":["website","web design","no code","landing page"],"free_tier":true,"pricing_starts":5,"website_url":"https://www.framer.com","best_for":["designers","startups"],"rating":4.6},{"name":"Webflow","category":"website_building","description":"Visual website builder with AI assistance","keywords":["website","web design","CMS","e-commerce"],"free_tier":true,"pricing_starts":14,"website_url":"https://webflow.com","best_for":["designers","agencies"],"rating":4.5},{"name":"Figma AI","category":"website_building","description":"Collaborative design tool with AI features","keywords":["UI design","UX","prototyping","wireframes"],"free_tier":true,"pricing_starts":15,"website_url":"https://www.figma.com","best_for":["designers","product teams"],"rating":4.7},{"name":"Loom","category":"video_generation","description":"Video messaging tool with AI summaries","keywords":["screen recording","video messaging","tutorials"],"free_tier":true,"pricing_starts":15,"website_url":"https://www.loom.com","best_for":["remote teams","educators"],"rating":4.5},{"name":"Copy.ai","category":"writing","description":"AI-powered copywriting for sales and marketing","keywords":["copy","sales","email","social media","marketing"],"free_tier":true,"pricing_starts":49,"website_url":"https://www.copy.ai","best_for":["sales teams","marketers"],"rating":4.3},{"name":"Notion AI","category":"research","description":"AI assistant in Notion for writing and organizing","keywords":["notes","writing","organization","wiki","documents"],"free_tier":false,"pricing_starts":10,"website_url":"https://notion.so","best_for":["teams","students"],"rating":4.4},{"name":"Murf AI","category":"audio_voice","description":"AI voiceover platform with studio-quality voices","keywords":["voiceover","audio","narration","video voice"],"free_tier":true,"pricing_starts":19,"website_url":"https://murf.ai","best_for":["marketers","educators"],"rating":4.4},{"name":"Tabnine","category":"coding","description":"AI code completion with privacy-focused options","keywords":["code completion","autocomplete","programming","IDE"],"free_tier":true,"pricing_starts":12,"website_url":"https://www.tabnine.com","best_for":["enterprise developers"],"rating":4.3},{"name":"Buffer","category":"marketing","description":"Simple social media scheduling with AI writing","keywords":["social media","scheduling","posts","content"],"free_tier":true,"pricing_starts":6,"website_url":"https://buffer.com","best_for":["small businesses","creators"],"rating":4.4},{"name":"Freshdesk","category":"customer_support","description":"Cloud-based customer support software with AI","keywords":["help desk","ticketing","support","customer service"],"free_tier":true,"pricing_starts":15,"website_url":"https://www.freshdesk.com","best_for":["small to medium businesses"],"rating":4.4},{"name":"Khanmigo","category":"education","description":"AI tutoring assistant from Khan Academy","keywords":["tutoring","learning","education","homework","studying"],"free_tier":true,"pricing_starts":0,"website_url":"https://www.khanmigo.ai","best_for":["students","teachers"],"rating":4.5},{"name":"MagicSchool","category":"education","description":"AI platform for teachers to create lesson plans","keywords":["teaching","lesson plans","curriculum","education"],"free_tier":true,"pricing_starts":0,"website_url":"https://www.magicschool.ai","best_for":["teachers","educators"],"rating":4.6},{"name":"Lokalise","category":"translation","description":"AI-powered localization platform for apps","keywords":["localization","app translation","software localization"],"free_tier":false,"pricing_starts":120,"website_url":"https://lokalise.com","best_for":["development teams"],"rating":4.5},{"name":"Manatal","category":"hr_recruitment","description":"AI-powered applicant tracking system","keywords":["recruiting","hiring","ATS","candidates","HR"],"free_tier":false,"pricing_starts":15,"website_url":"https://www.manatal.com","best_for":["recruiters","HR teams"],"rating":4.5},{"name":"Lexis+ AI","category":"legal","description":"AI legal research and drafting tool","keywords":["legal research","case law","contracts","legal documents"],"free_tier":false,"pricing_starts":0,"website_url":"https://www.lexisnexis.com","best_for":["lawyers","legal teams"],"rating":4.3},{"name":"Xero","category":"finance","description":"Cloud accounting with AI reconciliation","keywords":["accounting","bookkeeping","invoicing","expenses"],"free_tier":false,"pricing_starts":15,"website_url":"https://www.xero.com","best_for":["small businesses","accountants"],"rating":4.4},{"name":"Meshy","category":"3d_animation","description":"AI 3D model generator from text or images","keywords":["3D models","3D generation","game assets","3D design"],"free_tier":true,"pricing_starts":20,"website_url":"https://www.meshy.ai","best_for":["game developers","3D artists"],"rating":4.3},{"name":"Blender","category":"3d_animation","description":"Free 3D creation suite with AI-assisted features","keywords":["3D modeling","animation","rendering","sculpting"],"free_tier":true,"pricing_starts":0,"website_url":"https://www.blender.org","best_for":["3D artists","animators"],"rating":4.7},{"name":"HireVue","category":"hr_recruitment","description":"AI video interviewing platform","keywords":["video interview","hiring","assessment","recruitment"],"free_tier":false,"pricing_starts":0,"website_url":"https://www.hirevue.com","best_for":["enterprise HR"],"rating":4.2},{"name":"ContractSafe","category":"legal","description":"AI contract management software","keywords":["contracts","contract management","legal documents"],"free_tier":false,"pricing_starts":299,"website_url":"https://www.contractsafe.com","best_for":["legal teams","procurement"],"rating":4.4}];
+
+        let selectedCategory = 'all';
+        let searchResults = [];
+        let hasSearched = false;
+
+        function init() {
+            renderExamples();
+            renderCategoryFilters();
+            renderTools(tools);
+            document.getElementById('searchInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') performSearch();
+            });
+        }
+
+        function renderExamples() {
+            const container = document.getElementById('examples');
+            container.innerHTML = examples.map(ex => 
+                `<button class="example-btn" onclick="selectExample('${ex}')">${ex}</button>`
+            ).join('');
+        }
+
+        function renderCategoryFilters() {
+            const container = document.getElementById('categoryFilters');
+            container.innerHTML = Object.entries(categories).map(([id, label]) => 
+                `<button class="filter-btn ${selectedCategory === id ? 'active' : ''}" onclick="filterCategory('${id}')">${label}</button>`
+            ).join('');
+        }
+
+        function selectExample(text) {
+            document.getElementById('searchInput').value = text;
+            performSearch();
+        }
+
+        function filterCategory(cat) {
+            selectedCategory = cat;
+            renderCategoryFilters();
+            renderTools(hasSearched ? searchResults : tools);
+        }
+
+        function performSearch() {
+            const query = document.getElementById('searchInput').value.trim().toLowerCase();
+            if (!query) return;
+
+            hasSearched = true;
+            const btn = document.getElementById('searchBtn');
+            btn.innerHTML = '<div class="spinner"></div> Finding...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                const scored = tools.map(tool => {
+                    let score = 0;
+                    const keywords = tool.keywords.map(k => k.toLowerCase());
+                    const queryWords = query.split(/\s+/);
+
+                    queryWords.forEach(word => {
+                        if (keywords.some(k => k.includes(word) || word.includes(k))) score += 10;
+                        if (tool.name.toLowerCase().includes(word)) score += 15;
+                        if (tool.description.toLowerCase().includes(word)) score += 5;
+                        if (tool.best_for?.some(b => b.toLowerCase().includes(word))) score += 8;
+                    });
+
+                    return { ...tool, matchScore: Math.min(99, score * 3) };
+                });
+
+                searchResults = scored.filter(t => t.matchScore > 0).sort((a, b) => b.matchScore - a.matchScore);
+                renderTools(searchResults);
+                
+                btn.innerHTML = '<svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg> Find AI Tools';
+                btn.disabled = false;
+            }, 800);
+        }
+
+        function renderTools(toolsList) {
+            const filtered = selectedCategory === 'all' ? toolsList : toolsList.filter(t => t.category === selectedCategory);
+            const grid = document.getElementById('toolsGrid');
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div style="grid-column: 1/-1;" class="empty-state">
+                        <div class="empty-icon">
+                            <svg width="40" height="40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                        </div>
+                        <h3 style="font-size:20px; color:#334155; margin-bottom:8px;">No tools found</h3>
+                        <p style="color:#64748b;">Try a different search or filter</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const headerEl = document.getElementById('resultsHeader');
+            if (hasSearched) {
+                headerEl.innerHTML = `
+                    <div class="results-header">
+                        <p style="color:#64748b;">Found <span style="font-weight:600; color:#7c3aed;">${filtered.length}</span> matching tools</p>
+                        <button onclick="resetSearch()" style="color:#7c3aed; background:none; border:none; cursor:pointer; font-size:14px; font-weight:500;">Browse all tools →</button>
+                    </div>
+                `;
+            } else {
+                headerEl.innerHTML = '';
+            }
+
+            grid.innerHTML = filtered.map(tool => {
+                const gradient = gradients[tool.category] || gradients.general_assistant;
+                const stars = Array(5).fill(0).map((_, i) => 
+                    `<span class="star ${i < Math.floor(tool.rating) ? '' : 'empty'}">★</span>`
+                ).join('');
+
+                return `
+                    <div class="card">
+                        <div class="card-header">
+                            <div style="display:flex; align-items:center; gap:12px;">
+                                <div class="card-icon" style="background:${gradient}">${tool.name.charAt(0)}</div>
+                                <div>
+                                    <div class="card-title">${tool.name}</div>
+                                    <span class="card-category">${categories[tool.category]}</span>
+                                </div>
+                            </div>
+                            ${tool.matchScore ? `<div class="match-score">${tool.matchScore}% match</div>` : ''}
+                        </div>
+                        <p class="card-desc">${tool.description}</p>
+                        ${tool.best_for ? `<div class="card-tags">${tool.best_for.slice(0,3).map(t => `<span class="tag">${t}</span>`).join('')}</div>` : ''}
+                        <div class="card-info">
+                            ${tool.free_tier ? '<span>✓ Free tier</span>' : ''}
+                            ${tool.pricing_starts > 0 ? `<span>From $${tool.pricing_starts}/mo</span>` : ''}
+                        </div>
+                        <div class="rating">${stars}</div>
+                        <a href__="${tool.website_url}" target="_blank" class="card-btn">
+                            Visit Website
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                        </a>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function resetSearch() {
+            hasSearched = false;
+            searchResults = [];
+            document.getElementById('searchInput').value = '';
+            renderTools(tools);
+        }
+
+        init();
+    </script>
+</body>
+</html>
