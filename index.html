@@ -713,25 +713,18 @@
       // Initialize todos
       renderTodos();
 
-      // Visit website function with multiple fallbacks
+      // Visit website function - works from file:// and when popups are blocked
       function visitWebsite(url) {
-        // Method 1: window.open
-        const newWindow = window.open(url, "_blank", "noopener,noreferrer");
-
-        // Method 2: Fallback if popup blocked
-        if (
-          !newWindow ||
-          newWindow.closed ||
-          typeof newWindow.closed === "undefined"
-        ) {
-          // Method 3: Create temporary link and click it
-          const a = document.createElement("a");
-          a.href = url;
-          a.target = "_blank";
-          a.rel = "noopener noreferrer";
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
+        if (!url || typeof url !== "string") return;
+        url = url.trim();
+        if (!url.startsWith("http://") && !url.startsWith("https://")) return;
+        try {
+          const w = window.open(url, "_blank", "noopener,noreferrer");
+          if (!w || w.closed || typeof w.closed === "undefined") {
+            window.location.href = url;
+          }
+        } catch (e) {
+          window.location.href = url;
         }
       }
 
@@ -1411,17 +1404,6 @@
           pricing: "Freemium",
           keywords:
             "descript, video editing, transcription, podcast, overdub, text editing, text to video, AI video editor,Edit a video, video generation, video editing, motion graphics, video effects",
-        },
-        {
-          name: "CapCut",
-          category: "video_generation",
-          description: "Free video editor with AI features",
-          url: "https://www.capcut.com/",
-          rating: 4,
-          tags: ["mobile", "TikTok", "free"],
-          pricing: "Free",
-          keywords:
-            "capcut, mobile video, tiktok editor, free editing, AI effects, Edit a video, video generation, video editing, motion graphics, video effects",
         },
         {
           name: "Opus Clip",
@@ -2801,7 +2783,7 @@
           category: "d_animation",
           description:
             "AI tools for 3D modeling, animation, and creative projects.",
-          url: "https://runwayml.com",
+          url: "https://runwayml.com/3d",
           rating: 4,
           tags: ["3D", "AI+3D", "Creative Tools"],
           pricing: "Freemium",
@@ -3114,7 +3096,7 @@
                         <div class="card-info">
                             <span>💰 ${tool.pricing}</span>
                         </div>
-                        <button class="card-btn" onclick="visitWebsite('${tool.url}')">
+                        <button type="button" class="card-btn" onclick="visitWebsite('${(tool.url || "").replace(/'/g, "&#39;")}')">
                             Visit Website
                             <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
@@ -3135,5 +3117,3 @@
     </script>
   </body>
 </html>
-
-
