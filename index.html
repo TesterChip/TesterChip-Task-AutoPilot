@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>TesterChip - Find the Perfect AI Tool</title>
     <meta
       name="description"
@@ -483,16 +483,178 @@
           transform: rotate(360deg);
         }
       }
-      @media (max-width: 640px) {
+      /* Mobile-first responsive styles */
+      @media (max-width: 768px) {
+        .container {
+          padding: 16px;
+        }
+        .hero {
+          padding: 32px 16px 24px;
+        }
         h1 {
-          font-size: 32px;
+          font-size: 28px;
+          line-height: 1.2;
+          margin-bottom: 12px;
+        }
+        .subtitle {
+          font-size: 16px;
+          margin-bottom: 24px;
+        }
+        .badge {
+          font-size: 12px;
+          padding: 6px 12px;
+          margin-bottom: 16px;
+        }
+        .search-box {
+          margin-bottom: 24px;
+        }
+        .search-input {
+          padding: 16px 16px 16px 44px;
+          font-size: 16px; /* Prevents iOS zoom on focus */
+        }
+        .search-btn {
+          position: static;
+          width: 100%;
+          margin-top: 12px;
+          justify-content: center;
+          min-height: 48px; /* Touch-friendly */
+        }
+        .search-box {
+          display: flex;
+          flex-direction: column;
+          padding: 12px;
+        }
+        .search-icon {
+          top: 38px;
+          transform: none;
+        }
+        .examples {
+          margin-bottom: 24px;
+          gap: 6px;
+        }
+        .example-btn {
+          font-size: 13px;
+          padding: 10px 14px;
+          min-height: 44px; /* Touch-friendly */
+        }
+        .todo-container {
+          padding: 16px;
+          margin-bottom: 24px;
+        }
+        .todo-header {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 12px;
+        }
+        .todo-title {
+          font-size: 18px;
+        }
+        .todo-input-box {
+          flex-direction: column;
+        }
+        .todo-add-btn {
+          min-height: 48px;
+        }
+        .todo-toggle {
+          align-self: flex-end;
+          min-height: 44px;
         }
         .stats {
+          flex-direction: row;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 24px;
+          padding: 16px;
+        }
+        .stat-value {
+          font-size: 24px;
+        }
+        .stat-label {
+          font-size: 12px;
+        }
+        .filters {
+          gap: 6px;
+          margin-bottom: 20px;
+        }
+        .filter-btn {
+          padding: 10px 14px;
+          min-height: 44px;
+          font-size: 13px;
+        }
+        .results-header {
           flex-direction: column;
-          gap: 20px;
+          align-items: stretch;
+          gap: 12px;
+          margin-bottom: 16px;
         }
         .grid {
           grid-template-columns: 1fr;
+          gap: 16px;
+        }
+        .card {
+          padding: 20px;
+          min-width: 0; /* Prevent overflow on narrow screens */
+        }
+        .card-desc,
+        .card-title {
+          word-wrap: break-word;
+        }
+        .card-header {
+          flex-direction: column;
+          gap: 12px;
+        }
+        .card-title {
+          font-size: 16px;
+        }
+        .card-btn {
+          min-height: 48px;
+          padding: 14px;
+        }
+        .empty-state {
+          padding: 40px 16px;
+        }
+        .empty-icon {
+          width: 60px;
+          height: 60px;
+        }
+        .todo-item .todo-delete {
+          opacity: 1; /* Always visible on touch devices (no hover) */
+        }
+      }
+      @media (max-width: 480px) {
+        .container {
+          padding: 12px;
+        }
+        .hero {
+          padding: 24px 12px 20px;
+        }
+        h1 {
+          font-size: 24px;
+        }
+        .subtitle {
+          font-size: 14px;
+        }
+        .stats {
+          gap: 16px;
+        }
+        .stat-value {
+          font-size: 20px;
+        }
+        .card {
+          padding: 16px;
+        }
+      }
+      /* Prevent horizontal overflow */
+      html {
+        overflow-x: hidden;
+      }
+      body {
+        overflow-x: hidden;
+      }
+      /* Touch-friendly tap targets */
+      @media (hover: none) and (pointer: coarse) {
+        button, .example-btn, .filter-btn, .card-btn, a {
+          -webkit-tap-highlight-color: rgba(124, 58, 237, 0.2);
         }
       }
       .gradient-colour {
@@ -794,7 +956,7 @@
           url: "https://github.com/features/copilot",
           rating: 5,
           tags: ["code completion", "IDE plugin", "machine learning"],
-          pricing: "Paid",
+          pricing: "Freemium",
           keywords:
             "coding, programming, IDE, autocomplete, development, github, copilot, AI coding assistant",
         },
@@ -803,10 +965,10 @@
           category: "coding",
           description:
             "AI-first code editor built for pair programming with AI",
-          url: "https://cursor.sh",
+          url: "https://cursor.com",
           rating: 5,
           tags: ["code editor", "AI assistant", "VSCode fork"],
-          pricing: "Free",
+          pricing: "Freemium",
           keywords:
             "code editor, AI IDE, programming, development, cursor, AI coding",
         },
@@ -845,11 +1007,11 @@
         {
           name: "Amazon CodeWhisperer",
           category: "coding",
-          description: "AI coding companion from AWS with security scanning",
+          description: "Free AI coding companion from AWS with security scanning (features merging into Amazon Q Developer)",
           url: "https://aws.amazon.com/codewhisperer",
           rating: 4,
           tags: ["AWS", "security", "code suggestions"],
-          pricing: "Free",
+          pricing: "Freemium",
           keywords:
             "AWS, amazon, code suggestions, security, AI coding, codewhisperer",
         },
@@ -877,10 +1039,10 @@
             "developer search, coding answers, phind, programming help, AI search",
         },
         {
-          name: "v0.dev",
+          name: "v0",
           category: "coding",
-          description: "Generate UI components from text descriptions using AI",
-          url: "https://v0.dev",
+          description: "AI-powered web app builder by Vercel—generate UI and full apps from text",
+          url: "https://v0.app",
           rating: 5,
           tags: ["UI generation", "Vercel", "React"],
           pricing: "Freemium",
@@ -888,15 +1050,15 @@
             "UI generator, react components, vercel, v0, frontend AI, web development",
         },
         {
-          name: "Windsurf Editor",
+          name: "Windsurf",
           category: "coding",
-          description: "AI-powered code editor with intelligent suggestions",
-          url: "https://codeium.com/windsurf",
+          description: "AI-powered IDE by Codeium with Cascade and agentic coding",
+          url: "https://codeium.com/editor",
           rating: 4,
-          tags: ["code editor", "AI flows", "copilot++"],
-          pricing: "Free",
+          tags: ["code editor", "Cascade", "Codeium"],
+          pricing: "Freemium",
           keywords:
-            "AI code editor, windsurf, intelligent coding, development tools",
+            "AI code editor, windsurf, intelligent coding, development tools, codeium",
         },
         {
           name: "Blackbox AI",
@@ -1017,7 +1179,7 @@
           tags: ["conversational AI", "GPT-4", "versatile"],
           pricing: "Freemium",
           keywords:
-            "chatgpt, openai, AI chat, writing assistant, GPT-4, conversation AI, chatbot, writing blog, creative writing, writing blog posts, coding help, analysis, general AI, write a blog post, write an article, write a story, write a poem, write a blog post, write a poem, write an essay",
+            "chatgpt, openai, AI chat, writing assistant, GPT-4, conversation AI, chatbot, creative writing, coding help, analysis, general AI",
         },
         {
           name: "Claude",
@@ -1029,7 +1191,7 @@
           tags: ["long context", "thoughtful", "safe"],
           pricing: "Freemium",
           keywords:
-            "claude, anthropic, AI assistant, writing, analysis, long context AI, writing help, thoughtful AI, safe AI, creative writing, writing blog posts, general AI,write a blog post, write an article, write a story, write a poem",
+            "claude, anthropic, AI assistant, writing, analysis, long context AI, writing help, thoughtful AI, safe AI, creative writing, general AI",
         },
         {
           name: "Jasper",
@@ -1130,16 +1292,6 @@
             "sudowrite, fiction writing, creative AI, story writing, novel",
         },
         {
-          name: "Shortly AI",
-          category: "writing",
-          description: "AI writing partner that helps you write faster",
-          url: "https://www.shortlyai.com",
-          rating: 4,
-          tags: ["long-form", "commands", "simple"],
-          pricing: "Paid",
-          keywords: "shortly, fast writing, long form content, writing partner",
-        },
-        {
           name: "Anyword",
           category: "writing",
           description: "AI copywriting with performance prediction",
@@ -1183,28 +1335,28 @@
           tags: ["art", "Discord", "high quality"],
           pricing: "Paid",
           keywords:
-            "AI art, midjourney, image generation, discord bot, AI images, art generator, Generate product images, create art with AI, AI image generator, text to image AI",
+            "AI art, midjourney, image generation, discord bot, AI images, art generator, text to image",
         },
         {
           name: "DALL-E 3",
           category: "image_generation",
-          description: "OpenAI's powerful image generation from text",
+          description: "OpenAI's powerful image generation from text; free tier via ChatGPT (2 images/day)",
           url: "https://openai.com/dall-e-3",
           rating: 5,
           tags: ["OpenAI", "photorealistic", "creative"],
-          pricing: "Paid",
-          keywords: "dalle, openai, image AI, text to image, AI art, dalle 3, Create images from text, photorealistic AI, creative image generation, Create Logo Designs, generate art with AI, AI image generator, text to image AI, Create Logo Designs from Text and information, generate art with AI, AI image generator, text to image AI",
+          pricing: "Freemium",
+          keywords: "dalle, openai, image AI, text to image, AI art, dalle 3, photorealistic AI, creative image generation, AI image generator",
         },
         {
           name: "Stable Diffusion",
           category: "image_generation",
-          description: "Open-source AI image generation model",
+          description: "Open-source AI image model by Stability AI; free for most commercial use under Community License",
           url: "https://stability.ai",
           rating: 4,
-          tags: ["open source", "customizable", "free"],
-          pricing: "Free",
+          tags: ["open source", "customizable", "Stability AI"],
+          pricing: "Freemium",
           keywords:
-            "stable diffusion, open source AI, free image generation, AI art, stability AI, Create Logo Designs, generate art with AI, AI image generator, text to image AI",
+            "stable diffusion, open source AI, image generation, AI art, stability AI, text to image",
         },
         {
           name: "Leonardo.ai",
@@ -1215,7 +1367,7 @@
           tags: ["game assets", "consistent style", "canvas"],
           pricing: "Freemium",
           keywords:
-            "leonardo AI, game art, consistent style, AI images, character design, Create Logo Designs, generate art with AI, AI image generator, text to image AI, Generate product images",
+            "leonardo AI, game art, consistent style, AI images, character design, text to image",
         },
         {
           name: "Adobe Firefly",
@@ -1247,7 +1399,7 @@
           rating: 4,
           tags: ["design", "templates", "easy"],
           pricing: "Freemium",
-          keywords: "canva AI, design AI, templates, easy design, graphics, Create Logo Designs, generate art with AI, AI image generator, text to image AI, Generate product images",
+          keywords: "canva AI, design AI, templates, easy design, graphics, Create Logo Designs, AI image generator, text to image",
         },
         {
           name: "Playground AI",
@@ -1280,7 +1432,7 @@
           tags: ["editing", "filters", "online"],
           pricing: "Freemium",
           keywords:
-            "photo editing, pixlr, AI filters, online editor, image tools, Create Logo Designs, generate art with AI, AI image generator, text to image AI",
+            "photo editing, pixlr, AI filters, online editor, image tools, AI image generator",
         },
         {
           name: "NightCafe",
@@ -1302,7 +1454,7 @@
           tags: ["free", "simple", "accessible"],
           pricing: "Free",
           keywords:
-            "craiyon, dall-e mini, free images, simple AI, image generator",
+            "craiyon, dall-e mini, free images, simple AI, image generator, text to image",
         },
         {
           name: "DreamStudio",
@@ -1340,15 +1492,15 @@
 
         // Video & Animation (12+ tools)
         {
-          name: "Runway ML",
+          name: "Runway",
           category: "video_generation",
-          description: "AI-powered video editing and generation suite",
+          description: "AI-powered video editing and generation with Gen-3 Alpha",
           url: "https://runwayml.com",
           rating: 5,
-          tags: ["video editing", "gen-2", "creative"],
+          tags: ["video editing", "gen-3", "creative"],
           pricing: "Freemium",
           keywords:
-            "runway, video AI, gen-2, AI video editing, motion graphics, video generation, Eidtor, video effects, Edit a video, video generation, video editing, motion graphics, video effects",
+            "runway, video AI, gen-3, AI video editing, motion graphics, video generation, video effects",
         },
         {
           name: "Pika",
@@ -1359,7 +1511,7 @@
           tags: ["text-to-video", "effects", "creative"],
           pricing: "Freemium",
           keywords:
-            "pika, text to video, video AI, animation, AI video creator, creative video, video effects, video generation, Edit a video, video generation, video editing, motion graphics, video effects",
+            "pika, text to video, video AI, animation, AI video creator, creative video, video effects, video generation, video editing, motion graphics",
         },
         {
           name: "HeyGen",
@@ -1403,7 +1555,7 @@
           tags: ["transcription", "podcasting", "overdub"],
           pricing: "Freemium",
           keywords:
-            "descript, video editing, transcription, podcast, overdub, text editing, text to video, AI video editor,Edit a video, video generation, video editing, motion graphics, video effects",
+            "descript, video editing, transcription, podcast, overdub, text editing, AI video editor, video generation, motion graphics, video effects",
         },
         {
           name: "Opus Clip",
@@ -1414,7 +1566,7 @@
           tags: ["shorts", "clips", "viral"],
           pricing: "Freemium",
           keywords:
-            "opus clip, video shorts, viral clips, AI clipping, social media, Edit a video, video generation, video editing, motion graphics, video effects",
+            "opus clip, video shorts, viral clips, AI clipping, social media, video generation, video editing, motion graphics",
         },
         {
           name: "Invideo AI",
@@ -2029,9 +2181,9 @@
             "zapier, automation, workflow, integration, no-code, AI automation",
         },
         {
-          name: "Make (Integromat)",
+          name: "Make",
           category: "automation",
-          description: "Visual automation platform with AI capabilities",
+          description: "Visual automation platform (formerly Integromat) with AI capabilities",
           url: "https://www.make.com",
           rating: 4,
           tags: ["visual", "complex workflows", "integration"],
@@ -2141,18 +2293,6 @@
           keywords: "legal research, AI legal research, case law, statutes",
         },
         {
-          name: "ROSS Intelligence",
-          category: "legal",
-          description:
-            "AI legal research tool that uses natural language processing to find relevant case law.",
-          url: "https://rossintelligence.com",
-          rating: 4,
-          tags: ["Legal Research", "AI+law", "Lawyer"],
-          pricing: "Paid",
-          keywords:
-            "legal research, AI legal research, case law, natural language processing",
-        },
-        {
           name: "Luminance",
           category: "legal",
           description: "AI platform for contract analysis and due diligence.",
@@ -2213,16 +2353,16 @@
             "talent intelligence, AI recruitment, workforce planning, HR technology",
         },
         {
-          name: "Hiretual",
+          name: "hireEZ",
           category: "hr_recruitment",
           description:
-            "AI sourcing tool that helps recruiters find and engage with candidates across multiple platforms.",
-          url: "https://hiretual.com",
+            "AI recruiting platform (formerly Hiretual) for sourcing and engaging candidates across 750M+ profiles.",
+          url: "https://www.hiretual.com",
           rating: 4,
           tags: ["Candidate Sourcing", "AI+HR", "Recruitment"],
           pricing: "Paid",
           keywords:
-            "candidate sourcing, AI recruitment, talent acquisition, HR tech",
+            "hireez, hiretual, candidate sourcing, AI recruitment, talent acquisition, HR tech",
         },
         {
           name: "AllyO",
@@ -2362,17 +2502,6 @@
           pricing: "Freemium",
           keywords:
             "duolingo, language learning, AI education, language practice",
-        },
-        {
-          name: "Grammarly AI",
-          category: "education",
-          description: "AI writing assistant for grammar and style checking.",
-          url: "https://www.grammarly.com/ai",
-          rating: 4,
-          tags: ["Education", "AI+Writing", "Grammar Check"],
-          pricing: "Freemium",
-          keywords:
-            "grammarly, AI writing assistant, grammar check, writing improvement",
         },
         {
           name: "Photomath",
@@ -2925,8 +3054,36 @@
           },
       ];
 
+      // Expand and normalize keywords for each tool so search uses
+      // honest, related terms derived from their actual data.
+      const enhancedAiTools = aiTools.map((tool) => {
+        const baseKeywords = (tool.keywords || "").toLowerCase();
+        const nameKeywords = tool.name.toLowerCase();
+        const tagKeywords = (tool.tags || []).join(", ").toLowerCase();
+        const categoryLabel = categories[tool.category] || "";
+        const categoryKeywords = `${tool.category.replace(/_/g, " ")}, ${categoryLabel}`.toLowerCase();
+
+        const combined = [baseKeywords, nameKeywords, tagKeywords, categoryKeywords]
+          .map((s) => s.trim())
+          .filter(Boolean)
+          .join(", ");
+
+        const uniqueTokens = Array.from(
+          new Set(
+            combined
+              .split(/[,\s]+/)
+              .filter(Boolean),
+          ),
+        );
+
+        return {
+          ...tool,
+          keywords: uniqueTokens.join(", "),
+        };
+      });
+
       let currentFilter = "all";
-      let searchResults = [...aiTools];
+      let searchResults = [...enhancedAiTools];
 
       function initExamples() {
         const examples = [
@@ -2964,9 +3121,11 @@
         event.target.classList.add("active");
 
         if (category === "all") {
-          searchResults = [...aiTools];
+          searchResults = [...enhancedAiTools];
         } else {
-          searchResults = aiTools.filter((tool) => tool.category === category);
+          searchResults = enhancedAiTools.filter(
+            (tool) => tool.category === category,
+          );
         }
 
         displayResults();
@@ -2989,11 +3148,12 @@
           .value.toLowerCase()
           .trim();
 
+        // If the query is empty, just show the current category with no match %
         if (!query) {
           searchResults =
             currentFilter === "all"
-              ? [...aiTools]
-              : aiTools.filter((t) => t.category === currentFilter);
+              ? [...enhancedAiTools]
+              : enhancedAiTools.filter((t) => t.category === currentFilter);
           displayResults();
           return;
         }
@@ -3003,20 +3163,20 @@
         btn.innerHTML = '<div class="spinner"></div> Searching...';
 
         setTimeout(() => {
-          searchResults = aiTools.filter((tool) => {
-            const matchesFilter =
-              currentFilter === "all" || tool.category === currentFilter;
-            const searchText =
-              `${tool.name} ${tool.description} ${tool.tags.join(" ")} ${tool.keywords}`.toLowerCase();
-            const matchesSearch = searchText.includes(query);
-            return matchesFilter && matchesSearch;
-          });
+          const resultsWithScores = enhancedAiTools
+            .filter((tool) => {
+              return (
+                currentFilter === "all" || tool.category === currentFilter
+              );
+            })
+            .map((tool) => {
+              const matchScore = calculateMatchScore(tool, query);
+              return { ...tool, matchScore };
+            })
+            .filter((tool) => tool.matchScore > 0)
+            .sort((a, b) => b.matchScore - a.matchScore);
 
-          searchResults.sort((a, b) => {
-            const aScore = calculateMatchScore(a, query);
-            const bScore = calculateMatchScore(b, query);
-            return bScore - aScore;
-          });
+          searchResults = resultsWithScores;
 
           btn.disabled = false;
           btn.innerHTML = `<svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg> Find AI Tools`;
@@ -3025,19 +3185,54 @@
       }
 
       function calculateMatchScore(tool, query) {
-        const searchText =
-          `${tool.name} ${tool.description} ${tool.keywords}`.toLowerCase();
-        const words = query.split(" ");
-        let score = 0;
+        const words = query.split(/\s+/).filter(Boolean);
+        let keywordScore = 0;
+
+        const name = tool.name.toLowerCase();
+        const description = tool.description.toLowerCase();
+        const keywords = (tool.keywords || "").toLowerCase();
+        const tagsText = (tool.tags || []).join(" ").toLowerCase();
+        const categoryText = (
+          tool.category +
+          " " +
+          (categories[tool.category] || "")
+        ).toLowerCase();
+
+        // Same weights for all tools – fair comparison
+        const WEIGHTS = {
+          name: 12,
+          description: 10,
+          keywords: 10,
+          tags: 8,
+          category: 12,
+        };
 
         words.forEach((word) => {
-          if (tool.name.toLowerCase().includes(word)) score += 10;
-          if (tool.description.toLowerCase().includes(word)) score += 5;
-          if (tool.keywords.toLowerCase().includes(word)) score += 3;
-          if (tool.tags.some((tag) => tag.includes(word))) score += 2;
+          if (!word) return;
+          if (name.includes(word)) keywordScore += WEIGHTS.name;
+          if (description.includes(word)) keywordScore += WEIGHTS.description;
+          if (keywords.includes(word)) keywordScore += WEIGHTS.keywords;
+          if (tagsText.includes(word)) keywordScore += WEIGHTS.tags;
+          if (categoryText.includes(word)) keywordScore += WEIGHTS.category;
         });
 
-        return score;
+        // Max score per word ≈ 52; normalize to 0–100
+        const maxPossible = words.length * 52;
+        const keywordMatchPct = maxPossible > 0
+          ? Math.min(100, (keywordScore / maxPossible) * 100)
+          : 0;
+
+        if (keywordMatchPct === 0) return 0;
+
+        // Star rating: 20% weight – quality signal, same for all
+        const starRatingPct = ((tool.rating || 0) / 5) * 100;
+
+        // 80% relevance + 20% rating – fair blend
+        const percentage = Math.round(
+          keywordMatchPct * 0.8 + starRatingPct * 0.2
+        );
+
+        return Math.min(99, Math.max(1, percentage));
       }
 
       function displayResults() {
@@ -3077,12 +3272,21 @@
             return `
                     <div class="card">
                         <div class="card-header">
-                            <div class="card-icon" style="background: ${gradient}">
-                                ${icon}
+                            <div style="display:flex; align-items:center; gap:12px;">
+                                <div class="card-icon" style="background: ${gradient}">
+                                    ${icon}
+                                </div>
+                                <div>
+                                    <h3 class="card-title">${tool.name}</h3>
+                                    <span class="card-category">${categories[tool.category]}</span>
+                                </div>
                             </div>
-                            <span class="card-category">${categories[tool.category]}</span>
+                            ${
+                              typeof tool.matchScore === "number"
+                                ? `<span class="match-score">${tool.matchScore}% match</span>`
+                                : ""
+                            }
                         </div>
-                        <h3 class="card-title">${tool.name}</h3>
                         <p class="card-desc">${tool.description}</p>
                         <div class="card-tags">
                             ${tool.tags
@@ -3107,7 +3311,8 @@
           })
           .join("");
 
-        document.getElementById("totalTools").textContent = aiTools.length;
+        document.getElementById("totalTools").textContent =
+          enhancedAiTools.length;
       }
 
       // Initialize
