@@ -875,19 +875,23 @@
       // Initialize todos
       renderTodos();
 
-      // Visit website function - works from file:// and when popups are blocked
-      function visitWebsite(url) {
+      // Visit website function – navigate in the same tab and guard against double clicks
+      // (previous version tried to open a new tab which could trigger pop‑ups and
+      // would sometimes fall back to a redirect, causing two tabs to open when the
+      // popup check failed). We now always change the current location and disable
+      // the button that was clicked so a double‑click doesn't fire twice.
+      function visitWebsite(url, btn) {
         if (!url || typeof url !== "string") return;
         url = url.trim();
         if (!url.startsWith("http://") && !url.startsWith("https://")) return;
-        try {
-          const w = window.open(url, "_blank", "noopener,noreferrer");
-          if (!w || w.closed || typeof w.closed === "undefined") {
-            window.location.href = url;
-          }
-        } catch (e) {
-          window.location.href = url;
+        // disable the button immediately to prevent additional clicks
+        if (btn && btn instanceof HTMLButtonElement) {
+          btn.disabled = true;
+          btn.style.cursor = "not-allowed";
         }
+
+        // perform same-tab navigation
+        window.location.href = url;
       }
 
       // Categories and filters
@@ -897,33 +901,6 @@
         writing: "Writing",
         image_generation: "Images",
         video_generation: "Video",
-        audio_voice: "Audio",
-        data_analysis: "Data",
-        marketing: "Marketing",
-        customer_support: "Support",
-        education: "Education",
-        presentation: "Slides",
-        research: "Research",
-        d_animation: "3D",
-        website_building: "Websites",
-        translation: "Translation",
-        hr_recruitment: "HR",
-        legal: "Legal",
-        healthcare: "Healthcare",
-        finance: "Finance",
-        project_management: "Projects",
-        general_assistant: "Assistant",
-        automation: "Automation",
-        seo: "SEO",
-        design: "Design",
-        productivity: "Productivity",
-      };
-
-      const gradients = {
-        coding: "linear-gradient(135deg, #10b981, #14b8a6)",
-        writing: "linear-gradient(135deg, #3b82f6, #06b6d4)",
-        image_generation: "linear-gradient(135deg, #ec4899, #f43f5e)",
-        video_generation: "linear-gradient(135deg, #a855f7, #8b5cf6)",
         audio_voice: "linear-gradient(135deg, #f59e0b, #f97316)",
         data_analysis: "linear-gradient(135deg, #0ea5e9, #0284c7)",
         marketing: "linear-gradient(135deg, #ef4444, #dc2626)",
@@ -3300,7 +3277,7 @@
                         <div class="card-info">
                             <span>💰 ${tool.pricing}</span>
                         </div>
-                        <button type="button" class="card-btn" onclick="visitWebsite('${(tool.url || "").replace(/'/g, "&#39;")}')">
+                        <button type="button" class="card-btn" onclick="visitWebsite('${(tool.url || "").replace(/'/g, "&#39;")}', this)">
                             Visit Website
                             <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
@@ -3322,3 +3299,31 @@
     </script>
   </body>
 </html>
+
+        audio_voice: "Audio",
+        data_analysis: "Data",
+        marketing: "Marketing",
+        customer_support: "Support",
+        education: "Education",
+        presentation: "Slides",
+        research: "Research",
+        d_animation: "3D",
+        website_building: "Websites",
+        translation: "Translation",
+        hr_recruitment: "HR",
+        legal: "Legal",
+        healthcare: "Healthcare",
+        finance: "Finance",
+        project_management: "Projects",
+        general_assistant: "Assistant",
+        automation: "Automation",
+        seo: "SEO",
+        design: "Design",
+        productivity: "Productivity",
+      };
+
+      const gradients = {
+        coding: "linear-gradient(135deg, #10b981, #14b8a6)",
+        writing: "linear-gradient(135deg, #3b82f6, #06b6d4)",
+        image_generation: "linear-gradient(135deg, #ec4899, #f43f5e)",
+        video_generation: "linear-gradient(135deg, #a855f7, #8b5cf6)"
